@@ -4,6 +4,7 @@ __lua__
 --main
 function _init()
 	state="start"
+	tl=0
 	putbacks={}
 	setup()
 end
@@ -21,13 +22,25 @@ function _update()
 			state="start"
 		end
 	end
+
+	lvl_update()
 end
 
 function _draw()
 	cls()
 	
 	if state=="main" then
-		map()
+		map(0,0)
+
+		--change timelines
+		if tl==1 then	
+			map(0,45)
+		elseif tl==2 then	
+			map(43,0)
+		elseif tl==3 then	
+			map(45,44)
+		end
+
 		spr(1,px,py,1,1,flp)
 		pickup()
 		draw_cam()
@@ -87,10 +100,11 @@ function player_update()
  if health<=0 then
 		state="over"
 		win=false
-	elseif paper == 4 then
-		state="over"
-		win=true
-	end
+ end
+
+ if btnp(❎) then
+	tl+=1
+ end
 	
 end
 
