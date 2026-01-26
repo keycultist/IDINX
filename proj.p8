@@ -35,10 +35,16 @@ function _draw()
 		--change timelines
 		if tl==1 then	
 			map(0,45)
+			tstart=false
+			ttimer=50
 		elseif tl==2 then	
 			map(43,0)
+			tstart=false
+			ttimer=50
 		elseif tl==3 then	
 			map(45,44)
+			tstart=false
+			ttimer=50
 		end
 
 		spr(1,px,py,1,1,flp)
@@ -56,7 +62,9 @@ end
 
 function setup()
 	player_init()
-	
+	lvl_init()
+
+	--reset taken obj
 	for i in all(putbacks) do
 		mset(i.x,i.y,i.s)
 	end
@@ -104,6 +112,9 @@ function player_update()
 
  if btnp(❎) then
 	tl+=1
+	if tl>4 then 
+		tl=1
+	end
  end
 	
 end
@@ -135,7 +146,8 @@ function pickup()
 	if(sprover == 6) then
 		mset(ptx,pty,2)
 		add(putbacks,{x=ptx,y=pty,s=6})
-		paper += 2
+		paper += 1
+		tstart=true
 	end
 	
 	
@@ -144,12 +156,46 @@ end
 -->8
 --levels
 function lvlin()
-	goal=2 --win condition
-	putbacks={}
+	ttimer=50
+	tstart=false
+	bc=10 --bar colour
+	goal=false
 end
 
 function lvlupdate()
-
+	--tl1 goal
+	if paper == 4 then
+		state="over"
+		win=true
+	end
+	
+	--tl2 goal
+	
+	
+	--tl timer
+	if tstart==true then
+		if ttimer<= 0 then
+			ttimer=0
+			
+			if goal==false then
+				state="over"
+				win=false
+			elseif goal==true then
+				state="over"
+				win=true
+			end
+				
+		else
+			ttimer-=.001
+		end 
+		
+		--change bar colour
+		if ttimer>ttimer*.3 then	bc=8	end
+		
+		if ttimer>ttimer*.5 then bc=9	end
+		
+		if ttimer>ttimer*.9 then	bc=10	end	
+	end
 end 
 -->8
 --scenes + ui
@@ -159,16 +205,17 @@ function menu()
 end
 
 function draw_ui()
-	print("health: ".. health,cx,cy)
-	print("papers: ".. paper,cx,cy+10)
+	print("health: ".. health,cx,cy,7)
+	print("papers: ".. paper,cx,cy+7,7)
 	
 	--progress bar
---	print("progress: ".. progress,cx+30,cy+20)
+	bx,by=cx+128,cy
+	print("time: ".. ttimer,cx+78,cy+8,bc)
+	rectfill(bx,by,bx-ttimer,by+5,bc)
 end
 
 function draw_cam()
-	cx=px-40
-	cy=py-40
+	cx,cy=px-40,py-40
 	camera(cx,cy)
 end
 
