@@ -13,7 +13,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 268,
           "SelectedChildIndex": 3,
           "Children": [
             {
@@ -36,10 +36,20 @@
               "RelativeDocumentMoniker": "proj.p8",
               "ToolTip": "C:\\Users\\eilee\\source\\repos\\keycultist\\IDINX\\proj.p8",
               "RelativeToolTip": "proj.p8",
-              "ViewState": "AgIAAMMAAAAAAAAAAAAAAE4AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAcBAAAAAAAAAAAowA8BAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-01-26T07:41:43.584Z",
               "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 410,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }

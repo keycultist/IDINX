@@ -6,12 +6,14 @@ function _init()
 	state="start"
 	putbacks={}
 	setup()
+	
 end
 
 function _update()
 	if state=="main" then
 		lvl_update()
 		player_update()
+		
 	elseif state=="start" then
 		if btnp(❎) then
 			state="main"
@@ -22,7 +24,7 @@ function _update()
 			state="start"
 		end
 	end
-
+	
 	lvl_update()
 end
 
@@ -46,18 +48,19 @@ end
 function setup()
 	player_init()
 	lvl_init()
-
+	
 	--reset taken obj
 	for i in all(putbacks) do
 		mset(i.x,i.y,i.s)
 	end
 	
 	putbacks={}
+	
 end
 -->8
 --player
 function player_init()
-		--change player pos to diff areas
+	--change player pos to diff areas
 	if tl==0 then
 		px,py=63,63
 	elseif tl==1 then
@@ -91,7 +94,8 @@ function player_update()
  end	
  
 	local ptx,pty=(px+4)/8,(py+4)/8
---wall collision
+	
+	--wall collision
  if fget(mget(ptx,pty),0)==true then
  	px=lx
  	py=ly
@@ -100,9 +104,9 @@ function player_update()
  if health<=0 then
 		state="over"
 		win=false
- end	
+	end
+		
 end
-
 
 function pickup()
 
@@ -133,7 +137,7 @@ function pickup()
 		wire += 1
 		tstart=true
 	end
-
+	
 	--metal
 	if(sprover == 7) then
 		mset(ptx,pty,13)
@@ -142,19 +146,20 @@ function pickup()
 		tstart=true
 	end
 	
-	
 end
+
+
 
 -->8
 --levels
-function lvlin()
+function lvl_init()
 	tl=0
 	bc=10 --bar colour
 	bg=1 --bg colour
 	lvl_reset()
 end
 
-function lvlupdate()
+function lvl_update()
 	--for each tl
 	if tl==0 then
 		goalm,goalw=1,1
@@ -205,11 +210,10 @@ function lvlupdate()
 		
 		--change bar colour
 		if ttimer>ttimer*.3 then	bc=8	end
-		
 		if ttimer>ttimer*.5 then bc=9	end
-		
 		if ttimer>ttimer*.7 then	bc=10	end	
 	end
+	
 end 
 
 function lvl_reset()
@@ -218,6 +222,9 @@ function lvl_reset()
 	lvlgoal=false
 	metal,wire=0,0
 end 
+
+
+	
 
 -->8
 --scenes + ui
@@ -229,7 +236,7 @@ function menu()
 end
 
 function draw_ui()
-	print("health: ".. health,cx,cy,7)
+	print("health:".. health,cx,cy,7)
 	print("wires:".. wire,cx,cy+7,7)
 	print("metal:".. metal,cx,cy+14,7)
 	
@@ -239,12 +246,13 @@ function draw_ui()
 	rectfill(bx,by,bx-ttimer,by+5,bc)
 
 	print("timeline:"..tl,cx,cy+21,7)
-	print("goal:"..goalm..goalw,cx,cy+30,7)
+	print("goal:"..goalm..","..goalw,cx+45,cy,7)
 end
 
 function draw_cam()
 	cx=px-60
 	cy=py-60
+	
 	camera(cx,cy)
 end
 
@@ -270,7 +278,6 @@ function gameover()
 	print("press ❎ to play again",25,60)
 
 end
-
 __gfx__
 00000000f7effc7f111111113333333355555555ffffffffffffffffffffffffffffffffffffffff0000000000055666ddddddddffffffff0000000000000000
 00000000f7effc7f111111113333333355555555ffffffffffffffffff567677f566667ffe8ffe8f0000000000555566ddddddddffffffff0000000000000000
@@ -371,7 +378,7 @@ c0c0c0c0c0c0c0c0c0c0c0a000000000000000000000000000000000000000000000000000000000
 a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a000000000000000000000000000000000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0
 a0a0a0a0a0a0a0a0a0a0a0a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __gff__
-0000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000010000000001010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __map__
 0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a000000000000000000000000000000000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
